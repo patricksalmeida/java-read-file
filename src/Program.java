@@ -7,13 +7,7 @@ public class Program {
     public static void main(String[] args) {
         String path = "/Users/patrickalmeida/www/java-read-file/test-file.csv";
 
-        FileReader fileReader = null;
-        BufferedReader bufferedReader = null;
-
-        try {
-            fileReader = new FileReader(path);
-            bufferedReader = new BufferedReader(fileReader);
-
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
             String line = bufferedReader.readLine();
 
             while(line != null) {
@@ -22,13 +16,6 @@ public class Program {
             }
         } catch(IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                bufferedReader.close();
-                fileReader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
 
     }
