@@ -1,28 +1,36 @@
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.Objects;
-import java.util.Scanner;
 
 public class Program {
 
     public static void main(String[] args) {
-        File file = new File("/Users/patrickalmeida/www/java-read-file/test-file.csv");
-        Scanner scanner = null;
+        String path = "/Users/patrickalmeida/www/java-read-file/test-file.csv";
+
+        FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
 
         try {
-            scanner = new Scanner(file);
+            fileReader = new FileReader(path);
+            bufferedReader = new BufferedReader(fileReader);
 
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
+            String line = bufferedReader.readLine();
+
+            while(line != null) {
                 System.out.println(line);
+                line = bufferedReader.readLine();
             }
-        } catch (IOException e) {
+        } catch(IOException e) {
             e.printStackTrace();
         } finally {
-            if(Objects.nonNull(scanner)) {
-                scanner.close();
+            try {
+                bufferedReader.close();
+                fileReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
+
     }
 
 }
